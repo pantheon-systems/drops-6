@@ -582,7 +582,7 @@ function system_block($op = 'list', $delta = 0, $edit = NULL) {
   switch ($op) {
     case 'list':
       $blocks[0] = array(
-        'info' => t('Powered by Pressflow'),
+        'info' => t('Powered by Pantheon'),
         'weight' => '10',
          // Not worth caching.
         'cache' => BLOCK_NO_CACHE,
@@ -1766,7 +1766,7 @@ function system_mail($key, &$message, $params) {
   $account = $params['account'];
   $context = $params['context'];
   $variables = array(
-    '%site_name' => variable_get('site_name', 'Pressflow'),
+    '%site_name' => variable_get('site_name', 'Pantheon'),
     '%username' => $account->name,
   );
   if ($context['hook'] == 'taxonomy') {
@@ -1822,7 +1822,7 @@ function system_message_action_submit($form, $form_state) {
 function system_message_action(&$object, $context = array()) {
   global $user;
   $variables = array(
-    '%site_name' => variable_get('site_name', 'Pressflow'),
+    '%site_name' => variable_get('site_name', 'Pantheon'),
     '%username' => $user->name ? $user->name : variable_get('anonymous', t('Anonymous')),
   );
 
@@ -1937,6 +1937,6 @@ function system_check_http_request() {
  * @ingroup themeable
  */
 function theme_system_powered_by($image_path) {
-  $image = theme('image', $image_path, t('Powered by Pressflow, an open source content management system'), t('Powered by Pressflow, an open source content management system'));
+  $image = theme('image', $image_path, t('Powered by Pantheon, an open source content management system'), t('Powered by Pantheon, an open source content management system'));
   return l($image, 'http://drupal.org', array('html' => TRUE, 'absolute' => TRUE, 'external' => TRUE));
 }

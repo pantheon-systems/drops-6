@@ -19,7 +19,7 @@ function system_main_admin_page($arg = NULL) {
 
   // Check for status report errors.
   if (system_status(TRUE) && user_access('administer site configuration')) {
-    drupal_set_message(t('One or more problems were detected with your Pressflow installation. Check the <a href="@status">status report</a> for more information.', array('@status' => url('admin/reports/status'))), 'error');
+    drupal_set_message(t('One or more problems were detected with your Pantheon installation. Check the <a href="@status">status report</a> for more information.', array('@status' => url('admin/reports/status'))), 'error');
   }
   $blocks = array();
   if ($admin = db_fetch_array(db_query("SELECT menu_name, mlid FROM {menu_links} WHERE link_path = 'admin' AND module = 'system'"))) {
@@ -1141,7 +1141,7 @@ function system_site_information_settings() {
   $form['site_name'] = array(
     '#type' => 'textfield',
     '#title' => t('Name'),
-    '#default_value' => variable_get('site_name', 'Pressflow'),
+    '#default_value' => variable_get('site_name', 'Pantheon'),
     '#description' => t('The name of this website.'),
     '#required' => TRUE
   );
@@ -1266,7 +1266,7 @@ function system_logging_overview() {
  */
 function system_performance_settings() {
 
-  $description = '<p>'. t("The normal cache mode is suitable for most sites and does not cause any side effects. The aggressive cache mode causes Pressflow to skip the loading (boot) and unloading (exit) of enabled modules when serving a cached page. This results in an additional performance boost but can cause unwanted side effects.") .'</p>';
+  $description = '<p>'. t("The normal cache mode is suitable for most sites and does not cause any side effects. The aggressive cache mode causes Pantheon to skip the loading (boot) and unloading (exit) of enabled modules when serving a cached page. This results in an additional performance boost but can cause unwanted side effects.") .'</p>';
 
   $problem_modules = array_unique(array_merge(module_implements('boot'), module_implements('exit')));
   sort($problem_modules);
@@ -1280,7 +1280,7 @@ function system_performance_settings() {
   $form['page_cache'] = array(
     '#type' => 'fieldset',
     '#title' => t('Page cache'),
-    '#description' => t('Enabling the page cache will offer a significant performance boost. Pressflow can store and send compressed cached pages requested by <em>anonymous</em> users. By caching a web page, Pressflow does not have to construct the page each time it is viewed.'),
+    '#description' => t('Enabling the page cache will offer a significant performance boost. Pantheon can store and send compressed cached pages requested by <em>anonymous</em> users. By caching a web page, Pantheon does not have to construct the page each time it is viewed.'),
   );
 
   $form['page_cache']['cache'] = array(
@@ -1317,7 +1317,7 @@ function system_performance_settings() {
     '#title' => t('Page compression'),
     '#default_value' => variable_get('page_compression', TRUE),
     '#options' => array(t('Disabled'), t('Enabled')),
-    '#description' => t("By default, Pressflow compresses the pages it caches in order to save bandwidth and improve download times. This option should be disabled when using a webserver that performs compression."),
+    '#description' => t("By default, Pantheon compresses the pages it caches in order to save bandwidth and improve download times. This option should be disabled when using a webserver that performs compression."),
   );
 
   $form['block_cache'] = array(
@@ -1667,7 +1667,7 @@ function system_site_maintenance_settings() {
   $form['site_offline_message'] = array(
     '#type' => 'textarea',
     '#title' => t('Site off-line message'),
-    '#default_value' => variable_get('site_offline_message', t('@site is currently under maintenance. We should be back shortly. Thank you for your patience.', array('@site' => variable_get('site_name', 'Pressflow')))),
+    '#default_value' => variable_get('site_offline_message', t('@site is currently under maintenance. We should be back shortly. Thank you for your patience.', array('@site' => variable_get('site_name', 'Pantheon')))),
     '#description' => t('Message to show visitors when the site is in off-line mode.')
   );
 
