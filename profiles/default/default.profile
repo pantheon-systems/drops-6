@@ -36,37 +36,6 @@ function default_profile_details() {
 }
 
 /**
- * Return a list of tasks that this profile supports.
- *
- * @return
- *   A keyed array of tasks the profile will perform during
- *   the final stage. The keys of the array will be used internally,
- *   while the values will be displayed to the user in the installer
- *   task list.
- */
-function default_profile_task_list() {
-  // Take a swat at settings.php since this is called right before the database
-  // settings are written in. But it also can only be written once.
-  $settings_file = './'. conf_path(FALSE, TRUE) .'/settings.php';
-  $array = file($settings_file);
-  $slug = array_pop($array);
-  if (strpos($slug, '### END') === FALSE) {
-    if (is_writable($settings_file)) {
-      $fp = fopen($settings_file, 'a');  
-      if (fwrite($fp, _pantheon_settings()) === FALSE) {
-        drupal_set_message("Writing settings failed!", 'error');
-      }
-      else {
-        drupal_set_message("Pantheon configuration successfully written to your settings.php", 'message');
-      }
-    }
-    else {
-      drupal_set_message("Settings file not writable!", 'error');
-    }
-  }
-}
-
-/**
  * Perform any final installation tasks for this profile.
  *
  * @param $task
