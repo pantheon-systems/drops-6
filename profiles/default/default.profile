@@ -102,7 +102,6 @@ function default_profile_tasks(&$task, $url) {
   variable_set('preprocess_css', TRUE);
   
   // Set correct ApacheSolr port for Pantheon.
-  variable_set('apachesolr_path', '/pantheon_dev');
   variable_set('apachesolr_search_make_default', 1);
   variable_set('apachesolr_search_spellcheck', TRUE);
   
