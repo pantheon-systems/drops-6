@@ -1,0 +1,13 @@
+name = Apache Solr Organic Groups
+description = Integrates Organic Groups and Apache Solr Search
+dependencies[] = apachesolr
+dependencies[] = og
+package = Apache Solr
+core = "6.x"
+
+; Information added by drupal.org packaging script on 2011-04-22
+version = "6.x-1.3"
+core = "6.x"
+project = "apachesolr"
+datestamp = "1303499514"
+
