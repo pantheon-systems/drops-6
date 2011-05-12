@@ -10,20 +10,22 @@ function pantheon_apachesolr_install() {
     drupal_set_message("Schema posted to Pantheon indexing service.");
   }
   // Make our Class active.
-  variable_set('apachesolr_service_class', array(
+  $class = array(
     'pantheon_apachesolr', 
     'Pantheon_Apache_Solr_Service.php', 
-    'Pantheon_Apache_Solr_Service');
+    'Pantheon_Apache_Solr_Service',
   );
+  variable_set('apachesolr_service_class', $class);
 }
 
 function pantheon_apachesolr_enable() {
   // Make our Class active.
-  variable_set('apachesolr_service_class', array(
+  $class = array(
     'pantheon_apachesolr', 
     'Pantheon_Apache_Solr_Service.php', 
-    'Pantheon_Apache_Solr_Service');
+    'Pantheon_Apache_Solr_Service',
   );
+  variable_set('apachesolr_service_class', $class);
 }
 
 function pantheon_apachesolr_update_6001() {
