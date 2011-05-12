@@ -9,12 +9,15 @@
 
 function pantheon_apachesolr_update_schema($schema) {
   $ch = curl_init();
-  // Janktastic, but the SolrClient assumes http
   $host = variable_get('apachesolr_host', 'index.getpantheon.com');
   $port = variable_get('apachesolr_port', '443');
+  // Figure out env var
   $path = variable_get('apachesolr_path', 'sites/self/environments/dev/index');
   $client_cert = '/etc/pantheon/system.pem';
   $url = 'https://'. $host .'/'. $path;
+  
+  $file = fopen($schema, 'r');
+  
   // set URL and other appropriate options
   $opts = array(
     CURLOPT_URL => $url,
@@ -22,9 +25,10 @@ function pantheon_apachesolr_update_schema($schema) {
     CURLOPT_RETURNTRANSFER => 1,
     CURLOPT_SSLCERT => $client_cert,
     CURLOPT_HTTPHEADER => array('Content-type:text/xml; charset=utf-8'),
-    CURLOPT_CUSTOMREQUEST => "PUT",
+    CURLOPT_PUT => TRUE,
     CURLOPT_BINARYTRANSFER => 1,
-    CURLOPT_POSTFIELDS => array('schema.xml' => "@$schema"),
+    CURLOPT_INFILE => $file,
+    CURLOPT_INFILESIZE => filesize($schema),
   );
   curl_setopt_array($ch, $opts);
 
@@ -32,6 +36,6 @@ function pantheon_apachesolr_update_schema($schema) {
   if ($response == NULL) {
     watchdog('pantheon_apachesolr', "Error !error posting !schema to !url", array('!error' => curl_error($ch), '!schema' => $schema, '!url' => $url), WATCHDOG_ERROR);
   }
-  
+  fclose($file);
   return $response;
 }

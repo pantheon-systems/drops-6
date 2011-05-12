@@ -1,5 +1,5 @@
 <?php
-require_once 'SolrPhpClient/Apache/Solr/Service.php';
+include_once './' . drupal_get_path('module', 'apachesolr') . '/Drupal_Apache_Solr_Service.php';
 
 class Pantheon_Apache_Solr_Service extends Apache_Solr_Service {
 
@@ -317,10 +317,8 @@ class Pantheon_Apache_Solr_Service extends Apache_Solr_Service {
     $port = variable_get('apachesolr_port', '443');
     $ch = curl_init();
     // Janktastic, but the SolrClient assumes http
-    if (TRUE) {
-      $url = str_replace('http://', 'https://', $url);
-      curl_setopt($ch, CURLOPT_SSLCERT, $client_cert);
-    }
+    $url = str_replace('http://', 'https://', $url);
+    curl_setopt($ch, CURLOPT_SSLCERT, $client_cert);
 
         
     // set URL and other appropriate options
@@ -350,6 +348,7 @@ class Pantheon_Apache_Solr_Service extends Apache_Solr_Service {
     }
 
     $response = curl_exec($ch);
+
     if ($response == NULL) {
       // TODO; better error handling
       watchdog('pantheon_apachesolr', "Error !error connecting to !url on port !port", array('!error' => curl_error($ch), '!url' => $url, '!port' => $port), WATCHDOG_ERROR);
