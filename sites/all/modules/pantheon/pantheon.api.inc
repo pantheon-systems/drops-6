@@ -50,7 +50,7 @@ function pantheon_api_request($path, $method = 'GET', $data = NULL) {
   if (curl_errno($ch) != 0) {
     $error = curl_error($ch);
     curl_close($ch);
-    watchdog('pantheon', 'Curl error: !error', array('!error' => $error), WATCHDOG_EMERG);
+    watchdog('pantheon', 'Curl error: !error accessing !url', array('!error' => $error, '!url' => $url), WATCHDOG_ALERT);
     return FALSE;
   }
 
