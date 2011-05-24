@@ -1,0 +1,47 @@
+<?php
+
+/**
+ * Implementation of hook_schema()
+ */
+function pantheon_migrate_schema() {
+  $schema['pantheon_migrate_tokens'] = array(
+    'fields' => array(
+      'token_id' => array(
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'file_id' => array(
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'token' => array(
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+    ),
+    'indexes' => array(
+      'file_id' => array('file_id'),
+    ),
+    'primary key' => array('token_id'),
+  );
+  return $schema;
+}
+
+/**
+ * Implementation of hook_install()
+ */
+function pantheon_migrate_install() {
+  drupal_install_schema('pantheon_migrate');
+}
+
+/**
+ * Implementation of hook_uninstall()
+ */
+function pantheon_migrate_uninstall() {
+  drupal_uninstall_schema('pantheon_migrate');
+}
