@@ -1,5 +1,4 @@
 <?php
-// $Id: pantheon.profile,v 1.2 2010/08/04 21:33:49 gregcoit Exp $
 
 /**
  * Return an array of the modules to be enabled when this profile is installed.
