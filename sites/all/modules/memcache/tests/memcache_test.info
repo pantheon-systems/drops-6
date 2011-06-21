@@ -4,9 +4,3 @@ package = Testing
 core = 6.x
 hidden = TRUE
 
-; Information added by drupal.org packaging script on 2011-05-12
-version = "6.x-1.9"
-core = "6.x"
-project = "memcache"
-datestamp = "1305178916"
-
