@@ -2,7 +2,7 @@
 name = EXPERIMENTAL: Pantheon Apache Solr
 description = Allows the use of Pantheon's ApacheSolr infrastructure
 package = Pantheon
-dependencies[] = pantheon
+dependencies[] = pantheon_api
 dependencies[] = apachesolr
 core = 6.x
 php = 5.2

@@ -13,7 +13,7 @@ function default_profile_modules() {
     'color', 'comment', 'cookie_cache_bypass', 'help', 'menu', 'taxonomy', 'syslog', 'locale', 'search', 'update', 'dblog',
 
     // contrib: varnish, apachesolr, etc
-    'varnish', 'apachesolr', 'apachesolr_search'
+    'varnish', 'apachesolr', 'apachesolr_search', 'pantheon_api', 'pantheon_login'
   );
 
 }
@@ -82,7 +82,7 @@ function default_profile_tasks(&$task, $url) {
     $type = (object) _node_type_set_defaults($type);
     node_type_save($type);
   }
-  
+
   // Default page to not be promoted and have comments disabled.
   variable_set('node_options_page', array('status'));
   variable_set('comment_page', COMMENT_NODE_DISABLED);
@@ -91,7 +91,7 @@ function default_profile_tasks(&$task, $url) {
   $theme_settings = variable_get('theme_settings', array());
   $theme_settings['toggle_node_info_page'] = FALSE;
   variable_set('theme_settings', $theme_settings);
-  
+
   // Adjust settings on admin/settings/performance.
   variable_set('cache', CACHE_EXTERNAL);
   variable_set('page_cache_max_age', 900);
@@ -99,11 +99,11 @@ function default_profile_tasks(&$task, $url) {
   variable_set('page_compression', 0); // We do this via mod_deflate.
   variable_set('preprocess_js', TRUE);
   variable_set('preprocess_css', TRUE);
-  
+
   // Set correct ApacheSolr port for Pantheon.
   variable_set('apachesolr_search_make_default', 1);
   variable_set('apachesolr_search_spellcheck', TRUE);
-  
+
   // Set some permissions in the only ugly way possible
   // To extend this, just add more 'role_id' => array('perms') items to the array
   $perms = array(
