@@ -27,14 +27,14 @@ function pantheon_apachesolr_drush_command() {
       'drush hyperion-push path/to/mycustomschema.xml' => 'Push a custom schema.',
     ),
     'aliases' => array('hypush'),
-    'bootstrap' => DRUSH_BOOTSTRAP_CONFIG,
+    'bootstrap' => DRUSH_BOOTSTRAP_DRUPAL_CONFIGURATION,
   );
 
   return $items;
 }
 
 function drush_pantheon_apachesolr_hyperion_push($schema = NULL) {
-
+  include_once('pantheon_apachesolr.module');
   if ($schema == NULL) {
     $schema = drupal_get_path('module', 'pantheon_apachesolr') .'/schema.xml';
   }
