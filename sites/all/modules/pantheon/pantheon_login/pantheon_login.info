@@ -2,6 +2,7 @@
 name = Pantheon Login
 description = Allows users to log in as user #1 from their Pantheon Control Panel
 package = Pantheon
-dependencies[] = pantheon
+dependencies[] = pantheon_api
+hidden = TRUE
 core = 6.x
 php = 5.2
