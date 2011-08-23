@@ -408,15 +408,12 @@ function conf_init() {
   }
   // Load environmental config, if present.
   if (isset($_SERVER['PRESSFLOW_CONFIG'])) {
-    $pressflow_config = json_decode($_SERVER['PRESSFLOW_CONFIG'], TRUE);
+    $pressflow_config = json_decode($_SERVER['PRESSFLOW_CONFIG']);
     foreach ($pressflow_config as $key => $value) {
       // One level of depth should be enough for $conf and $database.
-      if (is_array($value)) {
-        if (is_array($$key)) {
-          $$key = array_merge_recursive($$key, $value);
-        }
-        else{
-          $$key = $value;
+      if ($key == 'conf') {
+        foreach($value as $conf_key => $conf_value) {
+          $conf[$conf_key] = $value;
         }
       }
       else {
