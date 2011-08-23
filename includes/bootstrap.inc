@@ -407,9 +407,9 @@ function conf_init() {
     include_once './'. conf_path() .'/settings.php';
   }
   // Load environmental config, if present.
-  if (isset($_SERVER['DRUPAL_SETTINGS'])) {
-    $pressflow_config = json_decode($_SERVER['DRUPAL_SETTINGS']);
-    foreach ($pressflow_config as $key => $value) {
+  if (isset($_SERVER['PRESSFLOW_SETTINGS'])) {
+    $pressflow_settings = json_decode($_SERVER['PRESSFLOW_SETTINGS']);
+    foreach ($pressflow_settings as $key => $value) {
       // One level of depth should be enough for $conf and $database.
       if ($key == 'conf') {
         foreach($value as $conf_key => $conf_value) {
