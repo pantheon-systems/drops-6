@@ -423,22 +423,21 @@ function conf_init() {
         $$key = $value;
       }
     }
-
-  }
-  // D7 to D6-style DB config conversion:
-  if (is_array($databases)) {
-    $db_url = array();
-    $db_slave_url = array();
-    foreach ($databases as $name => $data) {
-      foreach($data as $type => $info) {
-        if ($type == 'slave') {
-          $db_slave_url[$name] = array();
-          foreach($info as $slave) {
-            $db_slave_url[$name][] = sprintf("%s://%s:%s@%s:%s/%s", $slave['driver'], $slave['username'], $slave['password'], $slave['host'], $slave['port'], $slave['database']);
+    // D7 to D6-style DB config conversion:
+    if (is_array($databases)) {
+      $db_url = array();
+      $db_slave_url = array();
+      foreach ($databases as $name => $data) {
+        foreach ($data as $type => $info) {
+          if ($type == 'slave') {
+            $db_slave_url[$name] = array();
+            foreach ($info as $slave) {
+              $db_slave_url[$name][] = sprintf("%s://%s:%s@%s:%s/%s", $slave['driver'], $slave['username'], $slave['password'], $slave['host'], $slave['port'], $slave['database']);
+            }
           }
-        }
-        elseif ($type == 'default') {
-          $db_url[$name] = sprintf("%s://%s:%s@%s:%s/%s", $info['driver'], $info['username'], $info['password'], $info['host'], $info['port'], $info['database']);
+          elseif ($type == 'default') {
+            $db_url[$name] = sprintf("%s://%s:%s@%s:%s/%s", $info['driver'], $info['username'], $info['password'], $info['host'], $info['port'], $info['database']);
+          }
         }
       }
     }
