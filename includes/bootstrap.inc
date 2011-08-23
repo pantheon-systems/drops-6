@@ -407,8 +407,8 @@ function conf_init() {
     include_once './'. conf_path() .'/settings.php';
   }
   // Load environmental config, if present.
-  if (isset($_SERVER['PRESSFLOW_CONFIG'])) {
-    $pressflow_config = json_decode($_SERVER['PRESSFLOW_CONFIG']);
+  if (isset($_SERVER['DRUPAL_SETTINGS'])) {
+    $pressflow_config = json_decode($_SERVER['DRUPAL_SETTINGS']);
     foreach ($pressflow_config as $key => $value) {
       // One level of depth should be enough for $conf and $database.
       if ($key == 'conf') {
@@ -429,11 +429,11 @@ function conf_init() {
           if ($type == 'slave') {
             $db_slave_url[$name] = array();
             foreach ($info as $slave) {
-              $db_slave_url[$name][] = sprintf("%s://%s:%s@%s:%s/%s", $slave['driver'], $slave['username'], $slave['password'], $slave['host'], $slave['port'], $slave['database']);
+              $db_slave_url[$name][] = _convert_d7_db_to_d6($slave);
             }
           }
           elseif ($type == 'default') {
-            $db_url[$name] = sprintf("%s://%s:%s@%s:%s/%s", $info['driver'], $info['username'], $info['password'], $info['host'], $info['port'], $info['database']);
+            $db_url[$name] = _convert_d7_db_to_d6($info);
           }
         }
       }
@@ -512,6 +512,20 @@ function conf_init() {
   ini_set('session.cookie_httponly', '1');
 
   session_name('SESS'. md5($session_name));
+}
+
+/**
+ * Additional function to convert D7-style $database info arrays to
+ * D6-style $db_url strings.
+ *
+ * @param $info
+ *    A D7-style database info array.
+ *
+ * @return
+ *    A D6-style $db_url string.
+ */
+function _convert_d7_db_to_d6($info) {
+  return sprintf("%s://%s:%s@%s:%s/%s", $info['driver'], $info['username'], $info['password'], $info['host'], $info['port'], $info['database']);
 }
 
 /**
