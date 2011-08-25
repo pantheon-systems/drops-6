@@ -110,6 +110,7 @@ function _update_process_info_list(&$projects, $list, $project_type) {
       // Drupal core is always required, so this extra info would be noise.
       $sub_themes = array();
       $base_themes = array();
+      $file->info['version'] = VERSION;
     }
     else {
       // Add list of enabled sub-themes.
