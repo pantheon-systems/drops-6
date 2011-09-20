@@ -408,7 +408,7 @@ function conf_init() {
   }
   // Load environmental config, if present.
   if (isset($_SERVER['PRESSFLOW_SETTINGS'])) {
-    $pressflow_settings = json_decode($_SERVER['PRESSFLOW_SETTINGS']);
+    $pressflow_settings = json_decode($_SERVER['PRESSFLOW_SETTINGS'], TRUE);
     foreach ($pressflow_settings as $key => $value) {
       // One level of depth should be enough for $conf and $database.
       if ($key == 'conf') {
@@ -422,7 +422,7 @@ function conf_init() {
     }
     // D7 to D6-style DB config conversion:
     if (is_array($databases)) {
-      $db_url = array();
+      $db_url = '';
       $db_slave_url = array();
       foreach ($databases as $name => $data) {
         foreach ($data as $type => $info) {
@@ -433,7 +433,7 @@ function conf_init() {
             }
           }
           elseif ($type == 'default') {
-            $db_url[$name] = _convert_d7_db_to_d6($info);
+            $db_url = _convert_d7_db_to_d6($info);
           }
         }
       }
