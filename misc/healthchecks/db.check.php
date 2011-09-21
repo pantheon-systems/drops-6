@@ -11,5 +11,14 @@ if (isset($_SERVER['PRESSFLOW_SETTINGS'])) {
   mysql_close($link);
 }
 else {
-  die("NO CONFIG FOUND\n");
+  fail("No config found.\n");
+}
+
+/**
+ * Fail with a status code.
+ */
+function fail($message, $code = 500) {
+  header(sprintf("HTTP/1.0 %s %s", $code, $message));
+  echo $message;
+  exit;
 }
