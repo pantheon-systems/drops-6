@@ -320,17 +320,17 @@ class Pantheon_Apache_Solr_Service extends Apache_Solr_Service {
     $url = str_replace('http://', 'https://', $url);
     curl_setopt($ch, CURLOPT_SSLCERT, $client_cert);
 
-        
+
     // set URL and other appropriate options
     $opts = array(
       CURLOPT_URL => $url,
       CURLOPT_HEADER => 1,
       CURLOPT_PORT => $port,
       CURLOPT_RETURNTRANSFER => 1,
-      CURLOPT_HTTPHEADER => array('Content-type:text/xml; charset=utf-8'),
+      CURLOPT_HTTPHEADER => array('Content-type:text/xml; charset=utf-8', 'Expect:'),
     );
     curl_setopt_array($ch, $opts);
-    
+
     // If we are doing a delete request...
     if ($method == 'DELETE') {
       curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
@@ -373,7 +373,7 @@ class Pantheon_Apache_Solr_Service extends Apache_Solr_Service {
         }
       }
     }
-    
+
     // Restore the response timeout
     if ($timeout) {
       ini_set('default_socket_timeout', $default_socket_timeout);
