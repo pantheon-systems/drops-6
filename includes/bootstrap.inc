@@ -423,16 +423,9 @@ function conf_init() {
     // D7 to D6-style DB config conversion:
     if (is_array($databases)) {
       $db_url = '';
-      $db_slave_url = array();
       foreach ($databases as $name => $data) {
         foreach ($data as $type => $info) {
-          if ($type == 'slave') {
-            $db_slave_url[$name] = array();
-            foreach ($info as $slave) {
-              $db_slave_url[$name][] = _convert_d7_db_to_d6($slave);
-            }
-          }
-          elseif ($type == 'default') {
+          if ($type == 'default') {
             $db_url = _convert_d7_db_to_d6($info);
           }
         }
