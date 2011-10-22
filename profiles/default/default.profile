@@ -13,7 +13,8 @@ function default_profile_modules() {
     'color', 'comment', 'cookie_cache_bypass', 'help', 'menu', 'taxonomy', 'syslog', 'locale', 'search', 'update', 'dblog',
 
     // contrib: varnish, apachesolr, etc
-    'varnish', 'apachesolr', 'apachesolr_search', 'pantheon_api', 'pantheon_login'
+    // 'varnish', 'apachesolr', 'apachesolr_search',
+    'pantheon_api', 'pantheon_login'
   );
 
 }
