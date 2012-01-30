@@ -1,6 +1,0 @@
-name = Apache Solr node access
-description = Integrates the node access system with Apache Solr search
-dependencies[] = apachesolr
-package = Apache Solr
-core = "6.x"
-
