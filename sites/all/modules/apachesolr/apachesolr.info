@@ -1,7 +1,0 @@
-name = Apache Solr framework
-description = Framework for searching with Solr
-dependencies[] = search
-package = Apache Solr
-core = "6.x"
-php = 5.1.4
-
