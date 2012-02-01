@@ -10,8 +10,10 @@ class Pantheon_Apache_Solr_Service extends Drupal_Apache_Solr_Service {
     }
     // Pantheon completely reconstructs the URL.
     $parts = parse_url($url);
-    drupal_set_message(print_r($parts, 1));
-    $host = 'index.'. variable_get('pantheon_tier', 'live') .'.getpantheon.com';
+    $host = variable_get('pantheon_hyperion_host', FALSE);
+    if (!$host) {
+      $host = 'index.'. variable_get('pantheon_tier', 'live') .'.getpantheon.com';
+    }
     $path = 'sites/self/environments/'. variable_get('pantheon_environment', 'dev') .'/index';
     $url = 'https://'. $host .'/'. $path . str_replace('/solr', '', $parts['path']);
     if (isset($parts['query'])) {
@@ -23,7 +25,6 @@ class Pantheon_Apache_Solr_Service extends Drupal_Apache_Solr_Service {
       }
       $url .= '?' . $this->httpBuildQuery($params);
     }
-    drupal_set_message($url);
 
     $client_cert = '../certs/binding.pem';
     $port = 449;
