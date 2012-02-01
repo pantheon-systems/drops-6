@@ -400,15 +400,30 @@ function update_refresh() {
  * @see drupal_mail()
  * @see _update_cron_notify()
  * @see _update_message_text()
+ *
+ * This function is updated by Pantheon to direct users to their dashboard for
+ * core updates. Hence the $core variable, etc.
  */
 function update_mail($key, &$message, $params) {
+  $core = FALSE;
   $language = $message['language'];
   $langcode = $language->language;
   $message['subject'] .= t('New release(s) available for !site_name', array('!site_name' => variable_get('site_name', 'Pantheon')), $langcode);
   foreach ($params as $msg_type => $msg_reason) {
+    if ($msg_type == 'core') {
+      $core = TRUE;
+    }
     $message['body'][] = _update_message_text($msg_type, $msg_reason, FALSE, $language);
   }
   $message['body'][] = t('See the available updates page for more information:', array(), $langcode) ."\n". url('admin/reports/updates', array('absolute' => TRUE, 'language' => $language));
+  if ($core) {
+    // Add Pantheon link to beginning/end of mesage.
+    // TODO: have the $dashboard link directly to the site.
+    $dashboard = 'https://dashboard.getpantheon.com/account';
+    $text = t('Drupal core updates should be performed directly from <a href="@link">your Pantheon dashboard</a>.', array('@link' => $dashboard));
+    array_unshift($message['body'], $text);
+    $message['body'][] = t('Core updates should be performed directly from your Pantheon dashboard:', array(), $langcode) ."\n$dashboard";
+  }
 }
 
 /**
