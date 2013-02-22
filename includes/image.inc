@@ -114,7 +114,7 @@ function image_toolkit_invoke($method, $params = array()) {
  */
 function image_get_info($file) {
   $cid = "image_get_info:$file";
-  if (function_exists('pantheon_cache_get') && $cache = pantheon_cache_get($cid)) {
+  if (!defined('PANTHEON_NO_VALHALLA_FASTPATH') && function_exists('pantheon_cache_get') && $cache = pantheon_cache_get($cid)) {
     $statpath = str_replace('sites/default/files/', '', $file);
     $stat = pantheon_stat($statpath);
     if ($stat['size']	== $cache['file_size']) {
