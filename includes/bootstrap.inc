@@ -432,6 +432,15 @@ function conf_init() {
           if ($type == 'default') {
             $db_url = _convert_d7_db_to_d6($info);
           }
+          if ($type == 'slave') {
+            $db_slave_url = array();
+            if (!is_array($slave)) {
+              $info = array($info);
+            }
+            foreach ($info as $slave) {
+              $db_slave_url[] = _convert_d7_db_to_d6($slave);
+            }
+          }
         }
       }
     }
