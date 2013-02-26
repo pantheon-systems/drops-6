@@ -433,14 +433,12 @@ function conf_init() {
             $db_url = _convert_d7_db_to_d6($info);
           }
           if ($type == 'slave') {
-            if (is_array($info)) {
-              $db_slave_url = array();
-              foreach ($slave as $info) {
-                $db_slave_url[] = _convert_d7_db_to_d6($slave);
-              }
+            $db_slave_url = array();
+            if (!is_array($slave)) {
+              $info = array($info);
             }
-            else {
-              $db_slave_url = _convert_d7_db_to_d6($info);
+            foreach ($info as $slave) {
+              $db_slave_url[] = _convert_d7_db_to_d6($slave);
             }
           }
         }
