@@ -113,14 +113,6 @@ function image_toolkit_invoke($method, $params = array()) {
  *    'file_size' - File size in bytes.
  */
 function image_get_info($file) {
-  $cid = "image_get_info:$file";
-  if (!defined('PANTHEON_NO_VALHALLA_FASTPATH') && function_exists('pantheon_cache_get') && $cache = pantheon_cache_get($cid)) {
-    $statpath = str_replace('sites/default/files/', '', $file);
-    $stat = pantheon_stat($statpath);
-    if ($stat['size']	== $cache['file_size']) {
-      return $cache;
-    }
-  }
   // Proceed no further if this file doesn't exist. Some web servers (IIS) may
   // not pass is_file() for newly uploaded files, so we need two checks here.
   if (!is_file($file) && !is_uploaded_file($file)) {
@@ -140,9 +132,7 @@ function image_get_info($file) {
                      'file_size' => $file_size,
                      'mime_type' => $data['mime']);
   }
-  if (function_exists('pantheon_cache_get')) {
-    pantheon_cache_set($cid, $details);
-  }
+
   return $details;
 }
 
