@@ -10,10 +10,7 @@ class Pantheon_Apache_Solr_Service extends Drupal_Apache_Solr_Service {
     }
     // Pantheon completely reconstructs the URL.
     $parts = parse_url($url);
-    $host = variable_get('pantheon_hyperion_host', FALSE);
-    if (!$host) {
-      $host = 'index.'. variable_get('pantheon_tier', 'live') .'.getpantheon.com';
-    }
+    $host = variable_get('pantheon_index_host', 'index.'. variable_get('pantheon_tier', 'live') .'.getpantheon.com');
     $path = 'sites/self/environments/'. variable_get('pantheon_environment', 'dev') .'/index';
     $url = 'https://'. $host .'/'. $path . str_replace('/solr', '', $parts['path']);
     if (isset($parts['query'])) {
@@ -27,7 +24,7 @@ class Pantheon_Apache_Solr_Service extends Drupal_Apache_Solr_Service {
     }
 
     $client_cert = '../certs/binding.pem';
-    $port = 449;
+    $port = variable_get('pantheon_index_port', 449);
     $ch = curl_init();
     // Janktastic, but the SolrClient assumes http
 
