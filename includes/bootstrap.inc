@@ -1919,7 +1919,7 @@ function drupal_valid_test_ua($user_agent) {
 //  $key = sha1(serialize($databases) . filectime($filepath) . fileinode($filepath), TRUE);
   $key = sha1(serialize($db_url) . filectime($filepath) . fileinode($filepath), TRUE);
   // The HMAC must match.
-  return $hmac == base64_encode(hash_hmac('sha1', $check_string, $key, TRUE));
+  return $hmac == drupal_base64_encode(hash_hmac('sha1', $check_string, $key, TRUE));
 }
 
 /**
@@ -1942,7 +1942,7 @@ function drupal_generate_test_ua($prefix) {
    // Generate a moderately secure HMAC based on the database credentials.
    $salt = uniqid('', TRUE);
    $check_string = $prefix . ';' . time() . ';' . $salt;
-   return  $check_string . ';' . base64_encode(hash_hmac('sha1', $check_string, $key, TRUE));
+   return  $check_string . ';' . drupal_base64_encode(hash_hmac('sha1', $check_string, $key, TRUE));
 }
 
 /**
@@ -1969,7 +1969,7 @@ function drupal_session_destroy() {
   session_set_save_handler('sess_open', 'sess_close', 'sess_read', 'sess_write', 'sess_destroy_sid', 'sess_gc');
 }
 
-/*
+/**
  * Returns a URL-safe, base64 encoded string of highly randomized bytes (over the full 8-bit range).
  *
  * @param $byte_count
@@ -2076,3 +2076,4 @@ function drupal_random_bytes($count) {
   $bytes = substr($bytes, $count);
   return $output;
 }
+
