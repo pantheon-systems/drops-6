@@ -12,16 +12,7 @@ class Pantheon_Apache_Solr_Service extends Drupal_Apache_Solr_Service {
     $parts = parse_url($url);
     $host = variable_get('pantheon_index_host', 'index.'. variable_get('pantheon_tier', 'live') .'.getpantheon.com');
     $path = 'sites/self/environments/'. variable_get('pantheon_environment', 'dev') .'/index';
-    $url = 'https://'. $host .'/'. $path . str_replace('/solr', '', $parts['path']);
-    if (isset($parts['query'])) {
-      $params = array();
-      $query = explode('&', $parts['query']);
-      foreach($query as $pair) {
-        $p = explode('=', $pair);
-        $params[$p[0]] = $p[1];
-      }
-      $url .= '?' . $this->httpBuildQuery($params);
-    }
+    $url = 'https://'. $host .'/'. $path . str_replace('/solr', '', $parts['path']).'?'.$parts['query'];
 
     $client_cert = '../certs/binding.pem';
     $port = variable_get('pantheon_index_port', 449);
