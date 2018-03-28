@@ -1,3 +1,16 @@
+Drupal 6.38-p3, 2018-03-28 - SA-CORE-2018-002
+
+A remote code execution vulnerability exists within multiple subsystems.
+This potentially allows attackers to exploit multiple attack vectors on a
+Drupal site, which could result in the site being completely compromised.
+
+The security team has written an FAQ about this issue.
+https://groups.drupal.org/security/faq-2018-002
+
+Upstream reference:
+https://www.drupal.org/sa-core-2018-002
+
+
 Drupal 6.38-p2, 2018-02-21 - SA-CORE-2018-001
 ---------------------------------------------
 
