@@ -420,6 +420,13 @@ function conf_init() {
   // Load environmental config, if present.
   if (isset($_SERVER['PRESSFLOW_SETTINGS'])) {
     $pressflow_settings = json_decode($_SERVER['PRESSFLOW_SETTINGS'], TRUE);
+    if (
+      isset($pressflow_settings['databases']['default']['default']['driver']) &&
+      ($pressflow_settings['databases']['default']['default']['driver'] == 'mysql') &&
+      !extension_loaded('mysql')
+    ) {
+      $pressflow_settings['databases']['default']['default']['driver'] = 'mysqli';
+    }
     foreach ($pressflow_settings as $key => $value) {
       // One level of depth should be enough for $conf and $database.
       if ($key == 'conf') {
@@ -451,6 +458,9 @@ function conf_init() {
         }
       }
     }
+    // Disable multibyte string support, on by default in php 7.2
+    ini_set('mbstring.http_input', 'pass');
+    ini_set('mbstring.http_output', 'pass');
   }
 
   // Ignore the placeholder URL from default.settings.php.
