@@ -30,6 +30,7 @@ function pantheon_apachesolr_disable() {
 function pantheon_apachesolr_update_6001() {
   $ret = array();
   $schema = drupal_get_path('module', 'apachesolr') .'/schema.xml';
+  include_once drupal_get_path('module', 'apachesolr') . 'pantheon_apachesolr.module';
   $response = pantheon_apachesolr_update_schema($schema);
   $ret[] = array('success' => $response != NULL, 'query' => 'Response: '. print_r($response, 1));
 
