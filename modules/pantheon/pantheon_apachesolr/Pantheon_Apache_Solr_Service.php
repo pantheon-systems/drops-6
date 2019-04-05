@@ -3,7 +3,7 @@ include_once './' . drupal_get_path('module', 'apachesolr') . '/Drupal_Apache_So
 
 class Pantheon_Apache_Solr_Service extends Drupal_Apache_Solr_Service {
 
-  protected function _makeHttpRequest($url, $method = 'GET', $headers = array(), $content = '', $timeout = FALSE) {
+  protected function _makeHttpRequest($url, $method = 'GET', $headers = array(), $content = '', $timeout = false) {
     // Set a response timeout
     if ($timeout) {
       $default_socket_timeout = ini_set('default_socket_timeout', $timeout);
@@ -48,7 +48,7 @@ class Pantheon_Apache_Solr_Service extends Drupal_Apache_Solr_Service {
 
     $response = curl_exec($ch);
 
-    if ($response == NULL) {
+    if ($response == null) {
       // TODO; better error handling
       watchdog('pantheon_apachesolr', "Error !error connecting to !url on port !port", array('!error' => curl_error($ch), '!url' => $url, '!port' => $port), WATCHDOG_ERROR);
     }
