@@ -226,7 +226,7 @@ function form_set_cache($form_build_id, $form, $form_state) {
   if ($user->uid) {
     $form['#cache_token'] = drupal_get_token();
   }
-  elseif (variable_get('cache', CACHE_DISABLED) != CACHE_DISABLED && drupal_page_is_cacheable()) {
+  elseif (variable_get('cache', CACHE_DISABLED) != CACHE_DISABLED && $_SERVER['REQUEST_METHOD'] == 'GET' && page_get_cache(TRUE)) {
     $form['#immutable'] = TRUE;
   }
   $form_build_id_old = $form_build_id;
@@ -1424,14 +1424,15 @@ function form_set_value($form_item, $value, &$form_state) {
  * the right array.
  */
 function _form_set_value(&$form_values, $form_item, $parents, $value) {
+  // This makes PHP 7 have the same behavior as PHP 5 when the value is an
+  // empty string, rather than an array. This is depended on surprisingly
+  // often in Drupal 6 contrib.
+  if ($form_values === '') {
+    $form_values = array();
+  }
+
   $parent = array_shift($parents);
   if (empty($parents)) {
-    // This makes PHP 7 have the same behavior as PHP 5 when the value is an
-    // empty string, rather than an array. This is depended on surprisingly
-    // often in Drupal 6 contrib.
-    if ($form_values === '') {
-      $form_values = array();
-    }
     $form_values[$parent] = $value;
   }
   else {
@@ -1931,7 +1932,7 @@ function form_expand_ahah($element) {
     );
 
     // If page caching is active, indicate that this form is immutable.
-    if (variable_get('cache', CACHE_DISABLED) != CACHE_DISABLED && !$user->uid && drupal_page_is_cacheable()) {
+    if (variable_get('cache', CACHE_DISABLED) != CACHE_DISABLED && !$user->uid && $_SERVER['REQUEST_METHOD'] == 'GET' && page_get_cache(TRUE)) {
       $ahah_binding['immutable'] = TRUE;
     }
 
@@ -2094,7 +2095,7 @@ function theme_image_button($element) {
     (!empty($element['#value']) ? ('value="'. check_plain($element['#value']) .'" ') : '') .
     'id="'. $element['#id'] .'" '.
     drupal_attributes($element['#attributes']) .
-    ' src="'. file_create_url($element['#src']) .'" '.
+    ' src="'. base_path() . $element['#src'] .'" '.
     (!empty($element['#title']) ? 'alt="'. check_plain($element['#title']) .'" title="'. check_plain($element['#title']) .'" ' : '' ) .
     "/>\n";
 }

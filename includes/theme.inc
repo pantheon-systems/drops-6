@@ -1033,24 +1033,24 @@ function theme_get_setting($setting_name, $refresh = FALSE) {
 
     if ($settings['toggle_logo']) {
       if ($settings['default_logo']) {
-        $settings['logo'] = file_create_url(dirname($theme_object->filename) .'/logo.png');
+        $settings['logo'] = base_path() . dirname($theme_object->filename) .'/logo.png';
       }
       elseif ($settings['logo_path']) {
-        $settings['logo'] = file_create_url($settings['logo_path']);
+        $settings['logo'] = base_path() . $settings['logo_path'];
       }
     }
 
     if ($settings['toggle_favicon']) {
       if ($settings['default_favicon']) {
         if (file_exists($favicon = dirname($theme_object->filename) .'/favicon.ico')) {
-          $settings['favicon'] = file_create_url($favicon);
+          $settings['favicon'] = base_path() . $favicon;
         }
         else {
-          $settings['favicon'] = file_create_url('misc/favicon.ico');
+          $settings['favicon'] = base_path() .'misc/favicon.ico';
         }
       }
       elseif ($settings['favicon_path']) {
-        $settings['favicon'] = file_create_url($settings['favicon_path']);
+        $settings['favicon'] = base_path() . $settings['favicon_path'];
       }
       else {
         $settings['toggle_favicon'] = FALSE;
@@ -1286,7 +1286,7 @@ function theme_links($links, $attributes = array('class' => 'links')) {
 function theme_image($path, $alt = '', $title = '', $attributes = NULL, $getsize = TRUE) {
   if (!$getsize || (is_file($path) && (list($width, $height, $type, $image_attributes) = @getimagesize($path)))) {
     $attributes = drupal_attributes($attributes);
-    $url = (url($path) == $path) ? $path : file_create_url($path);
+    $url = (url($path) == $path) ? $path : (base_path() . $path);
     return '<img src="'. check_url($url) .'" alt="'. check_plain($alt) .'" title="'. check_plain($title) .'" '. (isset($image_attributes) ? $image_attributes : '') . $attributes .' />';
   }
 }
@@ -1371,7 +1371,7 @@ function theme_submenu($links) {
 function theme_table($header, $rows, $attributes = array(), $caption = NULL) {
 
   // Add sticky headers, if applicable.
-  if (count($header)) {
+  if (!empty($header)) {
     drupal_add_js('misc/tableheader.js');
     // Add 'sticky-enabled' class to the table to identify it for JS.
     // This is needed to target tables constructed by this function.
@@ -1385,24 +1385,24 @@ function theme_table($header, $rows, $attributes = array(), $caption = NULL) {
   }
 
   // Format the table header:
-  if (count($header)) {
+  if (!empty($header)) {
     $ts = tablesort_init($header);
     // HTML requires that the thead tag has tr tags in it followed by tbody
     // tags. Using ternary operator to check and see if we have any rows.
-    $output .= (count($rows) ? ' <thead><tr>' : ' <tr>');
+    $output .= (!empty($rows) ? ' <thead><tr>' : ' <tr>');
     foreach ($header as $cell) {
       $cell = tablesort_header($cell, $header, $ts);
       $output .= _theme_table_cell($cell, TRUE);
     }
     // Using ternary operator to close the tags based on whether or not there are rows
-    $output .= (count($rows) ? " </tr></thead>\n" : "</tr>\n");
+    $output .= (!empty($rows) ? " </tr></thead>\n" : "</tr>\n");
   }
   else {
     $ts = array();
   }
 
   // Format the table rows:
-  if (count($rows)) {
+  if (!empty($rows)) {
     $output .= "<tbody>\n";
     $flip = array('even' => 'odd', 'odd' => 'even');
     $class = 'even';
@@ -1870,10 +1870,10 @@ function template_preprocess_page(&$variables) {
 
   // Construct page title
   if (drupal_get_title()) {
-    $head_title = array(strip_tags(drupal_get_title()), variable_get('site_name', 'Pantheon'));
+    $head_title = array(strip_tags(drupal_get_title()), variable_get('site_name', 'Drupal'));
   }
   else {
-    $head_title = array(variable_get('site_name', 'Pantheon'));
+    $head_title = array(variable_get('site_name', 'Drupal'));
     if (variable_get('site_slogan', '')) {
       $head_title[] = variable_get('site_slogan', '');
     }
@@ -1894,7 +1894,7 @@ function template_preprocess_page(&$variables) {
   $variables['primary_links']     = theme_get_setting('toggle_primary_links') ? menu_primary_links() : array();
   $variables['secondary_links']   = theme_get_setting('toggle_secondary_links') ? menu_secondary_links() : array();
   $variables['search_box']        = (theme_get_setting('toggle_search') ? drupal_get_form('search_theme_form') : '');
-  $variables['site_name']         = (theme_get_setting('toggle_name') ? filter_xss_admin(variable_get('site_name', 'Pantheon')) : '');
+  $variables['site_name']         = (theme_get_setting('toggle_name') ? filter_xss_admin(variable_get('site_name', 'Drupal')) : '');
   $variables['site_slogan']       = (theme_get_setting('toggle_slogan') ? filter_xss_admin(variable_get('site_slogan', '')) : '');
   $variables['css']               = drupal_add_css();
   $variables['styles']            = drupal_get_css();

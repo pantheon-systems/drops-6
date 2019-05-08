@@ -1,0 +1,11 @@
+--- modules/system/system.install	2018-11-26 10:22:35.000000000 -0800
++++ modules/system/system.install	2016-05-18 14:57:13.000000000 -0700
+@@ -11,7 +11,7 @@ function system_requirements($phase) {
+   // Report Drupal version
+   if ($phase == 'runtime') {
+     $requirements['drupal'] = array(
+-      'title' => $t('Pressflow'),
++      'title' => $t('Pantheon'),
+       'value' => VERSION,
+       'severity' => REQUIREMENT_INFO,
+       'weight' => -10,

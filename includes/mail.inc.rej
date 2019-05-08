@@ -1,0 +1,11 @@
+--- includes/mail.inc	2018-11-26 10:22:35.000000000 -0800
++++ includes/mail.inc	2016-05-18 14:57:13.000000000 -0700
+@@ -101,7 +101,7 @@ function drupal_mail($module, $key, $to,
+     'MIME-Version'              => '1.0',
+     'Content-Type'              => 'text/plain; charset=UTF-8; format=flowed; delsp=yes',
+     'Content-Transfer-Encoding' => '8Bit',
+-    'X-Mailer'                  => 'Pressflow'
++    'X-Mailer'                  => 'Pantheon'
+   );
+   if ($default_from) {
+     // To prevent e-mail from looking like spam, the addresses in the Sender and
