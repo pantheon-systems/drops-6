@@ -1,0 +1,24 @@
+--- includes/theme.maintenance.inc	2018-11-26 10:22:35.000000000 -0800
++++ includes/theme.maintenance.inc	2016-05-18 14:57:13.000000000 -0700
+@@ -233,10 +233,10 @@ function template_preprocess_maintenance
+ 
+   // Construct page title
+   if (drupal_get_title()) {
+-    $head_title = array(strip_tags(drupal_get_title()), variable_get('site_name', 'Pressflow'));
++    $head_title = array(strip_tags(drupal_get_title()), variable_get('site_name', 'Pantheon'));
+   }
+   else {
+-    $head_title = array(variable_get('site_name', 'Pressflow'));
++    $head_title = array(variable_get('site_name', 'Pantheon'));
+     if (variable_get('site_slogan', '')) {
+       $head_title[] = variable_get('site_slogan', '');
+     }
+@@ -256,7 +256,7 @@ function template_preprocess_maintenance
+   $variables['primary_links']     = array();
+   $variables['secondary_links']   = array();
+   $variables['search_box']        = '';
+-  $variables['site_name']         = (theme_get_setting('toggle_name') ? variable_get('site_name', 'Pressflow') : '');
++  $variables['site_name']         = (theme_get_setting('toggle_name') ? variable_get('site_name', 'Pantheon') : '');
+   $variables['site_slogan']       = (theme_get_setting('toggle_slogan') ? variable_get('site_slogan', '') : '');
+   $variables['css']               = drupal_add_css();
+   $variables['styles']            = drupal_get_css();
