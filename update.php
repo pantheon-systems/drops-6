@@ -345,7 +345,7 @@ function update_results_page() {
               $output .= '<li class="failure"><strong>Failed:</strong> '. $query['query'] .'</li>';
             }
           }
-          if (!count($queries)) {
+          if (empty($queries)) {
             $output .= '<li class="none">No queries</li>';
           }
           $output .= '</ul>';
@@ -644,7 +644,6 @@ ini_set('display_errors', TRUE);
 
 // Access check:
 if (!empty($update_free_access) || $user->uid == 1) {
-  drupal_session_start();
 
   include_once './includes/install.inc';
   include_once './includes/batch.inc';

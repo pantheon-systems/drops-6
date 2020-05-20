@@ -1,0 +1,20 @@
+--- modules/user/user.module	2018-11-26 10:22:35.000000000 -0800
++++ modules/user/user.module	2016-05-18 14:57:13.000000000 -0700
+@@ -1307,7 +1307,7 @@ function user_login(&$form_state) {
+     '#required' => TRUE,
+   );
+ 
+-  $form['name']['#description'] = t('Enter your @s username.', array('@s' => variable_get('site_name', 'Pressflow')));
++  $form['name']['#description'] = t('Enter your @s username.', array('@s' => variable_get('site_name', 'Pantheon')));
+   $form['pass'] = array('#type' => 'password',
+     '#title' => t('Password'),
+     '#description' => t('Enter the password that accompanies your username.'),
+@@ -2176,7 +2176,7 @@ function user_mail_tokens($account, $lan
+   global $base_url;
+   $tokens = array(
+     '!username' => $account->name,
+-    '!site' => variable_get('site_name', 'Pressflow'),
++    '!site' => variable_get('site_name', 'Pantheon'),
+     '!login_url' => user_pass_reset_url($account),
+     '!uri' => $base_url,
+     '!uri_brief' => preg_replace('!^https?://!', '', $base_url),
